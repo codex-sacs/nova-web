@@ -6,15 +6,17 @@
 <title>Nova AI</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Consolas, monospace;
 }
 
 body{
     background:#000;
+    font-family:'Orbitron',sans-serif;
     overflow:hidden;
 }
 
@@ -27,39 +29,46 @@ body{
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    background:radial-gradient(circle at center,#111,#000);
+    background:
+    radial-gradient(circle at center,#0f172a 0%,#000 70%);
 }
 
 .logo{
-    font-size:5rem;
-    color:#00ff88;
-    text-shadow:0 0 25px #00ff88;
-    margin-bottom:25px;
+    font-size:6rem;
+    font-weight:900;
+    color:#00e5ff;
+    text-shadow:
+    0 0 10px #00e5ff,
+    0 0 30px #00e5ff,
+    0 0 60px #00e5ff;
+    animation:pulse 2s infinite;
 }
 
-.tagline{
-    color:#aaa;
-    margin-bottom:35px;
+.subtitle{
+    color:#bdbdbd;
+    margin-top:15px;
+    margin-bottom:40px;
+    letter-spacing:3px;
 }
 
-.startBtn{
-    padding:16px 45px;
+.start-btn{
+    padding:18px 50px;
     border:none;
-    border-radius:10px;
-    background:#00ff88;
+    border-radius:12px;
+    background:#00e5ff;
     color:#000;
-    font-size:1.1rem;
+    font-size:1rem;
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
 }
 
-.startBtn:hover{
+.start-btn:hover{
     transform:scale(1.05);
-    box-shadow:0 0 20px #00ff88;
+    box-shadow:0 0 30px #00e5ff;
 }
 
-/* BOOT SCREEN */
+/* BOOT */
 
 #bootScreen{
     display:none;
@@ -68,86 +77,85 @@ body{
     background:#000;
     color:#00ff88;
     padding:40px;
+    font-family:Consolas,monospace;
 }
 
 #terminal{
     white-space:pre-wrap;
     line-height:1.8;
-    font-size:1rem;
 }
 
-.progressContainer{
+.progress-container{
     margin-top:25px;
     width:100%;
-    max-width:900px;
     border:1px solid #00ff88;
-    height:22px;
+    height:24px;
 }
 
-.progressBar{
+.progress-bar{
     width:0%;
     height:100%;
     background:#00ff88;
-    transition:.4s;
+    transition:.5s;
 }
 
-/* ABOUT SCREEN */
+/* ABOUT */
 
 #aboutScreen{
     display:none;
     position:fixed;
     inset:0;
-    background:
-    radial-gradient(circle at top,#181818,#000);
-    color:white;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     text-align:center;
     padding:30px;
+    background:
+    radial-gradient(circle at top,#0f172a,#000);
+    color:white;
 }
 
-.aboutTitle{
+.about-title{
     font-size:5rem;
-    margin-bottom:20px;
-    color:#00ff88;
+    color:#00e5ff;
+    text-shadow:0 0 25px #00e5ff;
 }
 
-.aboutText{
+.about-text{
     max-width:800px;
-    font-size:1.1rem;
-    line-height:1.8;
-    color:#cccccc;
+    margin-top:20px;
     margin-bottom:40px;
+    line-height:1.8;
+    color:#d6d6d6;
 }
 
-.enterBtn{
-    padding:16px 45px;
+.enter-btn{
+    padding:18px 50px;
     border:none;
-    border-radius:10px;
-    background:#00ff88;
+    border-radius:12px;
+    background:#00e5ff;
     color:#000;
-    font-size:1rem;
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
 }
 
-.enterBtn:hover{
+.enter-btn:hover{
     transform:scale(1.05);
-    box-shadow:0 0 20px #00ff88;
+    box-shadow:0 0 30px #00e5ff;
 }
 
-.fade{
-    animation:fadeIn .8s ease;
+.status{
+    margin-top:30px;
+    color:#00ff88;
 }
 
-@keyframes fadeIn{
-    from{
-        opacity:0;
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
     }
-    to{
-        opacity:1;
+    50%{
+        transform:scale(1.03);
     }
 }
 </style>
@@ -158,9 +166,9 @@ body{
 
 <div id="startScreen">
     <div class="logo">NOVA AI</div>
-    <div class="tagline">Advanced Artificial Intelligence System</div>
+    <div class="subtitle">CODEX • NOVA • INTELLIGENCE</div>
 
-    <button class="startBtn" onclick="startNova()">
+    <button class="start-btn" onclick="startNova()">
         START SYSTEM
     </button>
 </div>
@@ -170,31 +178,31 @@ body{
 <div id="bootScreen">
     <div id="terminal"></div>
 
-    <div class="progressContainer">
-        <div class="progressBar" id="progressBar"></div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
     </div>
 </div>
 
 <!-- ABOUT SCREEN -->
 
 <div id="aboutScreen">
-    <h1 class="aboutTitle">NOVA AI</h1>
+    <h1 class="about-title">NOVA AI</h1>
 
-    <p class="aboutText">
-        Nova AI is a next-generation intelligent assistant designed
-        to help users learn, create, code, research, and solve
-        complex problems. Built with speed, intelligence, and a
-        futuristic experience in mind.
+    <p class="about-text">
+        Nova AI is a futuristic conversational assistant built using
+        Google AI Studio. It helps users learn, create, research,
+        brainstorm ideas, solve problems, and interact naturally with AI.
+        Designed to be fast, intelligent, and easy to use.
     </p>
 
-    <button class="enterBtn" onclick="function enterNova() {
-    window.location.href = "https://codex-nova.ai.studio";
-}">
+    <button class="enter-btn" onclick="enterNova()">
         ENTER NOVA AI
     </button>
-</div>
 
-<!-- SOUND -->
+    <div class="status">
+        ● SYSTEM STATUS: ONLINE
+    </div>
+</div>
 
 <audio id="startupSound">
     <source src="assets/startup.mp3" type="audio/mpeg">
@@ -203,69 +211,63 @@ body{
 <script>
 
 const bootLines = [
-"> Initializing Nova Core...",
-"> Loading Neural Engine...",
-"> Connecting Intelligence Modules...",
-"> Running Security Protocols...",
-"> Syncing Knowledge Database...",
-"> Loading Voice Systems...",
-"> Starting Runtime Services...",
-"> Final System Check...",
-"> Nova AI Online."
+"[NOVA CORE] Initializing...",
+"[NOVA CORE] Loading Neural Engine...",
+"[NOVA CORE] Loading Intelligence Modules...",
+"[NOVA CORE] Starting Security Layer...",
+"[NOVA CORE] Connecting Network...",
+"[NOVA CORE] Connected to codex-nova.ai.studio",
+"[NOVA CORE] Synchronizing Systems...",
+"[NOVA CORE] Runtime Services Online...",
+"[NOVA CORE] Final Check Complete...",
+"[NOVA CORE] Nova AI Ready."
 ];
 
 function startNova(){
 
-    const sound = document.getElementById("startupSound");
+    document.getElementById("startupSound")
+    .play()
+    .catch(()=>{});
 
-    sound.play().catch(() => {});
+    document.getElementById("startScreen").style.display="none";
+    document.getElementById("bootScreen").style.display="block";
 
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("bootScreen").style.display = "block";
+    const terminal=document.getElementById("terminal");
+    const progress=document.getElementById("progressBar");
 
-    const terminal = document.getElementById("terminal");
-    const progress = document.getElementById("progressBar");
+    let i=0;
 
-    let current = 0;
+    const interval=setInterval(()=>{
 
-    const interval = setInterval(() => {
+        if(i<bootLines.length){
 
-        if(current < bootLines.length){
+            terminal.innerHTML+=bootLines[i]+"\n";
 
-            terminal.innerHTML += bootLines[current] + "\n";
+            progress.style.width=
+            ((i+1)/bootLines.length)*100+"%";
 
-            progress.style.width =
-            ((current + 1) / bootLines.length) * 100 + "%";
+            i++;
 
-            current++;
-
-        } else {
+        }else{
 
             clearInterval(interval);
 
-            setTimeout(() => {
+            setTimeout(()=>{
 
-                document.getElementById("bootScreen").style.display = "none";
-
-                const about =
-                document.getElementById("aboutScreen");
-
-                about.style.display = "flex";
-                about.classList.add("fade");
+                document.getElementById("bootScreen").style.display="none";
+                document.getElementById("aboutScreen").style.display="flex";
 
             },1000);
         }
 
-    },800);
+    },700);
 }
 
 function enterNova(){
 
-    // Replace this with your chat page
-    // Example:
-    // window.location.href = "chat.html";
+    window.location.href =
+    "https://codex-nova.ai.studio";
 
-    alert("Welcome to Nova AI!");
 }
 </script>
 
