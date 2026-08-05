@@ -15,78 +15,90 @@
 
 body{
     background:#000;
-    color:#00ff88;
-    height:100vh;
     overflow:hidden;
 }
 
 /* START SCREEN */
 
 #startScreen{
-    position:absolute;
+    position:fixed;
     inset:0;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    background:#000;
+    background:radial-gradient(circle at center,#111,#000);
 }
 
 .logo{
-    font-size:4rem;
-    margin-bottom:20px;
-    text-shadow:0 0 20px #00ff88;
+    font-size:5rem;
+    color:#00ff88;
+    text-shadow:0 0 25px #00ff88;
+    margin-bottom:25px;
+}
+
+.tagline{
+    color:#aaa;
+    margin-bottom:35px;
 }
 
 .startBtn{
-    padding:15px 40px;
+    padding:16px 45px;
     border:none;
+    border-radius:10px;
     background:#00ff88;
     color:#000;
-    font-size:1.2rem;
+    font-size:1.1rem;
+    font-weight:bold;
     cursor:pointer;
-    border-radius:8px;
     transition:.3s;
 }
 
 .startBtn:hover{
     transform:scale(1.05);
+    box-shadow:0 0 20px #00ff88;
 }
 
 /* BOOT SCREEN */
 
 #bootScreen{
     display:none;
-    padding:30px;
-    height:100vh;
-    background:black;
+    position:fixed;
+    inset:0;
+    background:#000;
+    color:#00ff88;
+    padding:40px;
 }
 
 #terminal{
     white-space:pre-wrap;
     line-height:1.8;
+    font-size:1rem;
 }
 
-.progress{
-    margin-top:20px;
+.progressContainer{
+    margin-top:25px;
     width:100%;
-    height:20px;
+    max-width:900px;
     border:1px solid #00ff88;
+    height:22px;
 }
 
-.bar{
+.progressBar{
     width:0%;
     height:100%;
     background:#00ff88;
+    transition:.4s;
 }
 
 /* ABOUT SCREEN */
 
 #aboutScreen{
     display:none;
-    position:absolute;
+    position:fixed;
     inset:0;
-    background:#050505;
+    background:
+    radial-gradient(circle at top,#181818,#000);
     color:white;
     justify-content:center;
     align-items:center;
@@ -95,115 +107,163 @@ body{
     padding:30px;
 }
 
-#aboutScreen h1{
-    font-size:4rem;
+.aboutTitle{
+    font-size:5rem;
     margin-bottom:20px;
+    color:#00ff88;
 }
 
-#aboutScreen p{
-    max-width:700px;
-    opacity:.8;
-    margin-bottom:30px;
+.aboutText{
+    max-width:800px;
+    font-size:1.1rem;
+    line-height:1.8;
+    color:#cccccc;
+    margin-bottom:40px;
 }
 
 .enterBtn{
-    padding:15px 40px;
+    padding:16px 45px;
     border:none;
+    border-radius:10px;
     background:#00ff88;
-    color:black;
+    color:#000;
     font-size:1rem;
+    font-weight:bold;
     cursor:pointer;
-    border-radius:8px;
+    transition:.3s;
+}
+
+.enterBtn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px #00ff88;
+}
+
+.fade{
+    animation:fadeIn .8s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- START -->
+<!-- START SCREEN -->
 
 <div id="startScreen">
     <div class="logo">NOVA AI</div>
+    <div class="tagline">Advanced Artificial Intelligence System</div>
+
     <button class="startBtn" onclick="startNova()">
         START SYSTEM
     </button>
 </div>
 
-<!-- BOOT -->
+<!-- BOOT SCREEN -->
 
 <div id="bootScreen">
     <div id="terminal"></div>
 
-    <div class="progress">
-        <div class="bar" id="bar"></div>
+    <div class="progressContainer">
+        <div class="progressBar" id="progressBar"></div>
     </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ABOUT SCREEN -->
 
 <div id="aboutScreen">
-    <h1>NOVA AI</h1>
+    <h1 class="aboutTitle">NOVA AI</h1>
 
-    <p>
-        Nova AI is an intelligent assistant designed to help
-        users learn, create, code, research, and explore ideas.
-        Built for speed, intelligence, and a futuristic experience.
+    <p class="aboutText">
+        Nova AI is a next-generation intelligent assistant designed
+        to help users learn, create, code, research, and solve
+        complex problems. Built with speed, intelligence, and a
+        futuristic experience in mind.
     </p>
 
-    <button class="enterBtn">
+    <button class="enterBtn" onclick="enterNova()">
         ENTER NOVA AI
     </button>
 </div>
 
 <!-- SOUND -->
+
 <audio id="startupSound">
-    <source src="startup.mp3" type="audio/mpeg">
+    <source src="assets/startup.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
 const bootLines = [
-"[NOVA CORE] Initializing...",
-"[NOVA CORE] Loading Neural Systems...",
-"[NOVA CORE] Connecting Knowledge Modules...",
-"[NOVA CORE] Running Security Checks...",
-"[NOVA CORE] Voice Systems Online...",
-"[NOVA CORE] Memory Loaded...",
-"[NOVA CORE] Ready."
+"> Initializing Nova Core...",
+"> Loading Neural Engine...",
+"> Connecting Intelligence Modules...",
+"> Running Security Protocols...",
+"> Syncing Knowledge Database...",
+"> Loading Voice Systems...",
+"> Starting Runtime Services...",
+"> Final System Check...",
+"> Nova AI Online."
 ];
 
 function startNova(){
 
-    document.getElementById("startupSound").play().catch(()=>{});
+    const sound = document.getElementById("startupSound");
 
-    document.getElementById("startScreen").style.display="none";
-    document.getElementById("bootScreen").style.display="block";
+    sound.play().catch(() => {});
 
-    let terminal = document.getElementById("terminal");
-    let bar = document.getElementById("bar");
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("bootScreen").style.display = "block";
 
-    let line = 0;
+    const terminal = document.getElementById("terminal");
+    const progress = document.getElementById("progressBar");
 
-    const bootInterval = setInterval(()=>{
+    let current = 0;
 
-        if(line < bootLines.length){
-            terminal.innerHTML += bootLines[line] + "\n";
-            bar.style.width = ((line+1)/bootLines.length)*100 + "%";
-            line++;
-        }
-        else{
+    const interval = setInterval(() => {
 
-            clearInterval(bootInterval);
+        if(current < bootLines.length){
 
-            setTimeout(()=>{
+            terminal.innerHTML += bootLines[current] + "\n";
 
-                document.getElementById("bootScreen").style.display="none";
+            progress.style.width =
+            ((current + 1) / bootLines.length) * 100 + "%";
 
-                document.getElementById("aboutScreen").style.display="flex";
+            current++;
+
+        } else {
+
+            clearInterval(interval);
+
+            setTimeout(() => {
+
+                document.getElementById("bootScreen").style.display = "none";
+
+                const about =
+                document.getElementById("aboutScreen");
+
+                about.style.display = "flex";
+                about.classList.add("fade");
 
             },1000);
         }
 
-    },900);
+    },800);
+}
+
+function enterNova(){
+
+    // Replace this with your chat page
+    // Example:
+    // window.location.href = "chat.html";
+
+    alert("Welcome to Nova AI!");
 }
 </script>
 
