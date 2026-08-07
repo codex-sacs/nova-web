@@ -105,3 +105,38 @@ async function startNova(){
 
     },800);
 }
+document.getElementById("latency").textContent =
+(Math.random() * 0.8 + 0.2).toFixed(2) + "s";
+
+document.getElementById("nodes").textContent =
+Math.floor(Math.random() * 400 + 700);
+
+function updateClock(){
+    const now = new Date();
+
+    document.getElementById("clock").textContent =
+    now.toLocaleTimeString();
+}
+
+updateClock();
+setInterval(updateClock,1000);
+
+const quotes = [
+    "[NOVA] Intelligence Core Online.",
+    "[NOVA] Knowledge Base Synchronized.",
+    "[NOVA] Awaiting User Input.",
+    "[NOVA] Neural Systems Stable.",
+    "[NOVA] Response Engine Ready."
+];
+
+let currentQuote = 0;
+
+setInterval(() => {
+
+    currentQuote =
+    (currentQuote + 1) % quotes.length;
+
+    document.getElementById("quote-box")
+    .textContent = quotes[currentQuote];
+
+}, 5000);
