@@ -176,3 +176,25 @@ body{
         0 0 60px #00e5ff;
     }
 }
+#quote-box{
+    margin:20px 0;
+    padding:12px;
+    color:#00e5ff;
+    text-align:center;
+    font-size:1rem;
+    text-shadow:0 0 10px #00e5ff;
+}
+
+.stats{
+    margin:25px 0;
+    display:grid;
+    gap:12px;
+    text-align:left;
+}
+
+.stats hr{
+    border:none;
+    height:1px;
+    background:rgba(255,255,255,.15);
+    margin:8px 0;
+}
