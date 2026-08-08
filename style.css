@@ -4,52 +4,112 @@
     box-sizing:border-box;
 }
 
+:root{
+    --cyan:#00e5ff;
+    --blue:#0066ff;
+    --green:#00ff88;
+    --bg:#050814;
+    --glass:rgba(255,255,255,.06);
+    --border:rgba(255,255,255,.15);
+}
+
 body{
-    background:#000;
+    background:var(--bg);
     color:#fff;
-    font-family:Orbitron,sans-serif;
+    font-family:'Orbitron',sans-serif;
     overflow:hidden;
 }
 
-#matrix,
-#stars,
-.scan{
-    position:fixed;
-    inset:0;
-}
+/* =========================
+   BACKGROUND
+========================= */
 
 #matrix{
+    position:fixed;
+    inset:0;
     z-index:0;
 }
 
 #stars{
-    background:
-    radial-gradient(circle at 20% 20%,#00e5ff 1px,transparent 2px),
-    radial-gradient(circle at 80% 40%,#fff 1px,transparent 2px),
-    radial-gradient(circle at 40% 80%,#00e5ff 1px,transparent 2px);
-
-    background-size:300px 300px;
+    position:fixed;
+    inset:0;
+    z-index:1;
     opacity:.35;
-    animation:drift 20s linear infinite;
+    background:
+    radial-gradient(circle at 15% 20%, #00e5ff 2px, transparent 3px),
+    radial-gradient(circle at 80% 35%, #ffffff 1px, transparent 2px),
+    radial-gradient(circle at 60% 75%, #00e5ff 1px, transparent 2px),
+    radial-gradient(circle at 30% 80%, #ffffff 1px, transparent 2px);
+    background-size:300px 300px;
+    animation:starDrift 20s linear infinite;
 }
 
-@keyframes drift{
-    from{transform:translateY(0)}
-    to{transform:translateY(-300px)}
+@keyframes starDrift{
+    from{transform:translateY(0);}
+    to{transform:translateY(-300px);}
 }
+
+/* Aurora Glow */
+
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    border-radius:50%;
+    filter:blur(120px);
+    z-index:-1;
+    opacity:.25;
+}
+
+body::before{
+    background:#00e5ff;
+    left:-150px;
+    top:-150px;
+    animation:aurora1 15s infinite alternate;
+}
+
+body::after{
+    background:#003cff;
+    right:-150px;
+    bottom:-150px;
+    animation:aurora2 18s infinite alternate;
+}
+
+@keyframes aurora1{
+    from{transform:translate(0,0);}
+    to{transform:translate(200px,150px);}
+}
+
+@keyframes aurora2{
+    from{transform:translate(0,0);}
+    to{transform:translate(-200px,-150px);}
+}
+
+/* =========================
+   SCANNER
+========================= */
 
 .scan{
+    position:fixed;
+    left:0;
+    width:100%;
     height:2px;
-    background:#00e5ff;
-    box-shadow:0 0 20px #00e5ff;
-    animation:scan 5s linear infinite;
+    background:var(--cyan);
+    box-shadow:0 0 20px var(--cyan);
+    animation:scan 6s linear infinite;
     z-index:2;
 }
 
 @keyframes scan{
-    from{top:-5px}
-    to{top:100%}
+    from{top:-5px;}
+    to{top:100%;}
 }
+
+/* =========================
+   SCREENS
+========================= */
 
 .screen{
     position:fixed;
@@ -58,29 +118,39 @@ body{
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    z-index:3;
+    z-index:5;
 }
 
-.logo{
-    font-size:6rem;
-    color:#00e5ff;
-    text-shadow:0 0 30px #00e5ff;
+#boot,
+#about{
+    display:none;
 }
+
+/* =========================
+   ORB
+========================= */
 
 .orb{
-    width:180px;
-    height:180px;
+    width:220px;
+    height:220px;
     border-radius:50%;
-    margin-bottom:25px;
+    margin-bottom:30px;
 
     background:
-    radial-gradient(circle,#00e5ff,#003cff,#000);
+    radial-gradient(circle at 30% 30%,
+    #ffffff,
+    var(--cyan),
+    var(--blue),
+    #000);
 
     box-shadow:
-    0 0 40px #00e5ff,
-    0 0 100px #00e5ff;
+    0 0 40px var(--cyan),
+    0 0 80px var(--cyan),
+    0 0 150px var(--blue);
 
-    animation:float 4s ease-in-out infinite;
+    animation:
+    float 4s ease-in-out infinite,
+    pulseOrb 3s infinite;
 }
 
 @keyframes float{
@@ -89,135 +159,243 @@ body{
     }
 }
 
-.btn{
-    padding:16px 40px;
-    border:none;
-    border-radius:14px;
-    background:#00e5ff;
-    font-weight:bold;
-    cursor:pointer;
-    margin-top:25px;
+@keyframes pulseOrb{
+    50%{
+        box-shadow:
+        0 0 60px var(--cyan),
+        0 0 120px var(--cyan),
+        0 0 200px var(--blue);
+    }
 }
 
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+    font-size:6rem;
+    font-weight:900;
+    letter-spacing:10px;
+
+    color:var(--cyan);
+
+    text-shadow:
+    0 0 15px var(--cyan),
+    0 0 40px var(--cyan),
+    0 0 80px var(--cyan);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    margin-top:25px;
+    padding:16px 40px;
+
+    border:none;
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--cyan),
+    var(--blue));
+
+    color:white;
+    font-family:'Orbitron',sans-serif;
+    font-weight:bold;
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-4px) scale(1.03);
+
+    box-shadow:
+    0 0 20px var(--cyan),
+    0 0 40px var(--cyan);
+}
+
+.btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+/* =========================
+   BOOT
+========================= */
+
 #boot{
-    display:none;
     padding:40px;
     align-items:flex-start;
     justify-content:flex-start;
 }
 
 #terminal{
-    white-space:pre-wrap;
-    color:#00ff88;
+    color:var(--green);
     font-family:Consolas,monospace;
+    white-space:pre-wrap;
     line-height:1.8;
 }
 
 .barwrap{
     width:100%;
-    border:1px solid #00ff88;
-    height:22px;
     margin-top:20px;
+
+    border:1px solid var(--green);
+    height:24px;
+
+    overflow:hidden;
 }
 
 .bar{
-    height:100%;
     width:0;
-    background:#00ff88;
+    height:100%;
+    background:
+    linear-gradient(
+    90deg,
+    var(--green),
+    #66ffbb);
 }
 
 #pct{
     margin-top:10px;
-    color:#00ff88;
+    color:var(--green);
 }
 
-#about{
-    display:none;
-}
+/* =========================
+   CARD
+========================= */
 
 .card{
-    width:min(900px,90%);
+    width:min(950px,92%);
     padding:40px;
-    border-radius:24px;
 
-    background:rgba(255,255,255,.06);
+    border-radius:30px;
 
-    backdrop-filter:blur(12px);
+    background:var(--glass);
 
-    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(18px);
+
+    border:1px solid var(--border);
 
     text-align:center;
+
+    box-shadow:
+    0 0 30px rgba(0,229,255,.15),
+    0 0 80px rgba(0,229,255,.10);
+
+    animation:cardGlow 4s infinite;
+}
+
+@keyframes cardGlow{
+    50%{
+        box-shadow:
+        0 0 50px rgba(0,229,255,.25),
+        0 0 120px rgba(0,229,255,.12);
+    }
 }
 
 .card h1{
-    color:#00e5ff;
+    color:var(--cyan);
     margin-bottom:20px;
+    font-size:3rem;
 }
 
-.card p{
-    line-height:1.8;
-    color:#ddd;
-}
+/* =========================
+   QUOTES
+========================= */
 
-.stats{
-    margin:25px 0;
-    display:grid;
-    gap:10px;
-}
-
-.pulse{
-    animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-    50%{
-        box-shadow:
-        0 0 30px #00e5ff,
-        0 0 60px #00e5ff;
-    }
-}
 #quote-box{
     margin:20px 0;
-    padding:12px;
-    color:#00e5ff;
-    text-align:center;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:rgba(0,229,255,.08);
+
+    color:var(--cyan);
+
     font-size:1rem;
-    text-shadow:0 0 10px #00e5ff;
+
+    border:1px solid rgba(0,229,255,.2);
 }
 
+/* =========================
+   STATS
+========================= */
+
 .stats{
-    margin:25px 0;
     display:grid;
-    gap:12px;
-    text-align:left;
+    gap:10px;
+    margin:25px 0;
+}
+
+.stats div{
+    padding:8px;
 }
 
 .stats hr{
     border:none;
     height:1px;
     background:rgba(255,255,255,.15);
-    margin:8px 0;
+    margin:10px 0;
 }
-#enterBtn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
+
+/* =========================
+   READY STATUS
+========================= */
+
+#ready-status{
+    color:var(--green);
+    margin:20px 0;
+    font-weight:bold;
+    animation:readyPulse 1.5s infinite;
 }
+
+@keyframes readyPulse{
+    50%{
+        opacity:.5;
+        text-shadow:
+        0 0 10px var(--green),
+        0 0 20px var(--green);
+    }
+}
+
+/* =========================
+   TURNSTILE
+========================= */
 
 .cf-turnstile{
     margin:20px auto;
+    display:flex;
+    justify-content:center;
 }
 
-#ready-status{
-    color:#00ff88;
-    font-weight:bold;
-    margin:20px 0;
-    text-align:center;
-    animation:pulseReady 1.5s infinite;
-}
+/* =========================
+   MOBILE
+========================= */
 
-@keyframes pulseReady{
-    50%{
-        opacity:.5;
-        text-shadow:0 0 20px #00ff88;
+@media(max-width:768px){
+
+    .logo{
+        font-size:3rem;
+        letter-spacing:4px;
+    }
+
+    .orb{
+        width:150px;
+        height:150px;
+    }
+
+    .card{
+        padding:25px;
+    }
+
+    .card h1{
+        font-size:2rem;
     }
 }
