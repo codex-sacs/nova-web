@@ -1,79 +1,126 @@
-const c = document.getElementById('matrix');
-const x = c.getContext('2d');
+// ======================
+// MATRIX BACKGROUND
+// ======================
 
-function resize(){
-    c.width = innerWidth;
-    c.height = innerHeight;
+const c = document.getElementById("matrix");
+const x = c.getContext("2d");
+
+function resize() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
 }
 
 resize();
 window.onresize = resize;
 
-const cols = Math.floor(innerWidth / 20);
+const cols = Math.floor(window.innerWidth / 20);
 const drops = Array(cols).fill(1);
 
 setInterval(() => {
 
-    x.fillStyle = 'rgba(0,0,0,.08)';
-    x.fillRect(0,0,c.width,c.height);
+    x.fillStyle = "rgba(0,0,0,0.08)";
+    x.fillRect(0, 0, c.width, c.height);
 
-    x.fillStyle = '#00ff88';
-    x.font = '15px monospace';
+    x.fillStyle = "#00ff88";
+    x.font = "15px monospace";
 
-    drops.forEach((d,i) => {
+    drops.forEach((d, i) => {
+
+        const char = String.fromCharCode(
+            0x30A0 + Math.random() * 96
+        );
 
         x.fillText(
-            String.fromCharCode(
-                0x30A0 + Math.random() * 96
-            ),
+            char,
             i * 20,
             d * 20
         );
 
-        if(d * 20 > c.height &&
-           Math.random() > .975){
+        if (
+            d * 20 > c.height &&
+            Math.random() > 0.975
+        ) {
             drops[i] = 0;
         }
 
         drops[i]++;
     });
 
-},50);
+}, 50);
+
+// ======================
+// BOOT LOGS
+// ======================
 
 const lines = [
-"[NOVA CORE] Initializing...",
-"[NOVA CORE] Loading Neural Engine...",
-"[NOVA CORE] Security Checks Passed...",
-"[NOVA CORE] Connected to codex-nova.ai.studio",
-"[NOVA CORE] Synchronizing Intelligence...",
-"[NOVA CORE] Nova AI Ready."
+    "[NOVA CORE] Initializing...",
+    "[NOVA CORE] Loading Neural Engine...",
+    "[NOVA CORE] Security Checks Passed...",
+    "[NOVA CORE] Connected to codex-nova.ai.studio",
+    "[NOVA CORE] Synchronizing Intelligence...",
+    "[NOVA CORE] Nova AI Ready."
 ];
 
-async function typeLine(el,text){
+async function typeLine(el, text) {
 
-    for(const ch of text){
+    for (const ch of text) {
 
         el.innerHTML += ch;
 
         await new Promise(resolve =>
-            setTimeout(resolve,25)
+            setTimeout(resolve, 25)
         );
     }
 
     el.innerHTML += "\n";
 }
 
-async function startNova(){
+// ======================
+// VOICE WELCOME
+// ======================
+
+function speakWelcome() {
+
+    if (!("speechSynthesis" in window)) return;
+
+    const message = new SpeechSynthesisUtterance(
+        "Welcome to Nova AI. All systems operational. Awaiting your command."
+    );
+
+    message.rate = 0.85;
+    message.pitch = 0.9;
+    message.volume = 1;
+
+    const voices = speechSynthesis.getVoices();
+
+    const preferred =
+        voices.find(v => v.name.includes("Google")) ||
+        voices.find(v => v.name.includes("Microsoft")) ||
+        voices[0];
+
+    if (preferred) {
+        message.voice = preferred;
+    }
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(message);
+}
+
+// ======================
+// START NOVA
+// ======================
+
+async function startNova() {
 
     document
-    .getElementById("startup")
-    .play()
-    .catch(() => {});
+        .getElementById("startup")
+        .play()
+        .catch(() => {});
 
     start.style.display = "none";
     boot.style.display = "flex";
 
-    for(let i=0;i<lines.length;i++){
+    for (let i = 0; i < lines.length; i++) {
 
         await typeLine(
             terminal,
@@ -81,7 +128,7 @@ async function startNova(){
         );
 
         const v = Math.floor(
-            ((i+1)/lines.length)*100
+            ((i + 1) / lines.length) * 100
         );
 
         bar.style.width = v + "%";
@@ -89,69 +136,125 @@ async function startNova(){
     }
 
     document.body.animate(
-    [
-        {filter:"brightness(1)"},
-        {filter:"brightness(2.5)"},
-        {filter:"brightness(1)"}
-    ],
-    {
-        duration:400
-    });
+        [
+            { filter: "brightness(1)" },
+            { filter: "brightness(2.5)" },
+            { filter: "brightness(1)" }
+        ],
+        {
+            duration: 400
+        }
+    );
 
     setTimeout(() => {
 
         boot.style.display = "none";
         about.style.display = "flex";
 
-    },800);
+        speakWelcome();
+
+    }, 800);
 }
-document.getElementById("latency").textContent =
-(Math.random() * 0.8 + 0.2).toFixed(2) + "s";
 
-document.getElementById("nodes").textContent =
-Math.floor(Math.random() * 400 + 700);
+// ======================
+// TURNSTILE CALLBACK
+// ======================
 
-function updateClock(){
+function turnstileSuccess(token) {
+
+    console.log("Turnstile Success:", token);
+
+    const btn =
+        document.getElementById("enterBtn");
+
+    if (btn) {
+        btn.disabled = false;
+        btn.textContent = "ENTER NOVA AI";
+    }
+
+    const ready =
+        document.getElementById("ready-status");
+
+    if (ready) {
+        ready.innerHTML =
+            "✅ VERIFIED - ACCESS GRANTED";
+    }
+}
+
+// ======================
+// LIVE STATS
+// ======================
+
+const latency =
+    document.getElementById("latency");
+
+if (latency) {
+
+    latency.textContent =
+        (Math.random() * 0.8 + 0.2)
+        .toFixed(2) + "s";
+}
+
+const nodes =
+    document.getElementById("nodes");
+
+if (nodes) {
+
+    nodes.textContent =
+        Math.floor(
+            Math.random() * 400 + 700
+        );
+}
+
+// ======================
+// LIVE CLOCK
+// ======================
+
+function updateClock() {
+
+    const clock =
+        document.getElementById("clock");
+
+    if (!clock) return;
+
     const now = new Date();
 
-    document.getElementById("clock").textContent =
-    now.toLocaleTimeString();
+    clock.textContent =
+        now.toLocaleTimeString();
 }
 
 updateClock();
-setInterval(updateClock,1000);
+setInterval(updateClock, 1000);
+
+// ======================
+// ROTATING QUOTES
+// ======================
 
 const quotes = [
     "[NOVA] Intelligence Core Online.",
     "[NOVA] Knowledge Base Synchronized.",
     "[NOVA] Awaiting User Input.",
     "[NOVA] Neural Systems Stable.",
-    "[NOVA] Response Engine Ready."
+    "[NOVA] Response Engine Ready.",
+    "[NOVA] Security Layer Active.",
+    "[NOVA] Monitoring Global Network.",
+    "[NOVA] Processing Neural Tasks."
 ];
 
 let currentQuote = 0;
 
 setInterval(() => {
 
-    currentQuote =
-    (currentQuote + 1) % quotes.length;
+    const quoteBox =
+        document.getElementById("quote-box");
 
-    document.getElementById("quote-box")
-    .textContent = quotes[currentQuote];
+    if (!quoteBox) return;
+
+    currentQuote =
+        (currentQuote + 1) %
+        quotes.length;
+
+    quoteBox.textContent =
+        quotes[currentQuote];
 
 }, 5000);
-function speakWelcome() {
-
-    if (!("speechSynthesis" in window)) return;
-
-    const message = new SpeechSynthesisUtterance(
-        "Welcome to Nova A I. Systems online."
-    );
-
-    message.rate = 0.9;
-    message.pitch = 1;
-    message.volume = 1;
-
-    speechSynthesis.cancel();
-    speechSynthesis.speak(message);
-}
