@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nova AI</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -18,73 +17,49 @@
     <div class="orb"></div>
     <div class="logo">NOVA</div>
     <div>ADVANCED AI SYSTEM</div>
-
-    <button class="btn" onclick="startNova()">
-        START SYSTEM
-    </button>
+    <button class="btn" onclick="startNova()">START SYSTEM</button>
 </div>
 
 <div id="boot" class="screen">
     <div id="terminal"></div>
-
     <div class="barwrap">
         <div class="bar" id="bar"></div>
     </div>
-
     <div id="pct">0%</div>
 </div>
 
-    <h1>NOVA AI</h1>
+<div id="about" class="screen">
+    <div class="card">
+        <h1>NOVA AI</h1>
 
-<p>
-    Nova AI is a futuristic assistant built with
-    Google AI Studio to help users create,
-    learn, code, research and solve problems faster.
-</p>
+        <div id="quote-box">[NOVA] Intelligence Core Online.</div>
 
-<div id="quote-box">
-    "[NOVA] Intelligence Core Online."
+        <div class="stats">
+            <div>⚡ Response Engine: Online</div>
+            <div>🧠 Neural Modules: Active</div>
+            <div>🌐 Endpoint: codex-nova.ai.studio</div>
+
+            <hr>
+
+            <div>🔒 Security Layer: Secure</div>
+            <div>📚 Knowledge Base: Active</div>
+            <div>⚙️ Neural Core: Online</div>
+            <div>💾 Memory Systems: Stable</div>
+
+            <hr>
+
+            <div>📡 Connection Status: Connected</div>
+            <div>🚀 Version: 1.0.0</div>
+            <div>⏱️ Latency: <span id="latency">0.42s</span></div>
+            <div>🧬 Neural Nodes: <span id="nodes">847</span></div>
+            <div>🕒 System Time: <span id="clock">00:00:00</span></div>
+        </div>
+
+        <button class="btn pulse" onclick="location.href='https://codex-nova.ai.studio'">
+            ENTER NOVA AI
+        </button>
+    </div>
 </div>
-
-<div class="stats">
-
-    <div>⚡ Response Engine: Online</div>
-    <div>🧠 Neural Modules: Active</div>
-    <div>🌐 Endpoint: codex-nova.ai.studio</div>
-
-    <hr>
-
-    <div>🔒 Security Layer: Secure</div>
-    <div>📚 Knowledge Base: Active</div>
-    <div>⚙️ Neural Core: Online</div>
-    <div>💾 Memory Systems: Stable</div>
-
-    <hr>
-
-    <div>📡 Connection Status: Connected</div>
-    <div>🚀 Version: 1.0.0</div>
-
-    <div>
-        ⏱️ Latency:
-        <span id="latency">0.42s</span>
-    </div>
-
-    <div>
-        🧬 Neural Nodes:
-        <span id="nodes">847</span>
-    </div>
-
-    <div>
-        🕒 System Time:
-        <span id="clock">00:00:00</span>
-    </div>
-
-</div>
-
-<button class="btn pulse"
-onclick="location.href='https://codex-nova.ai.studio'">
-    ENTER NOVA AI
-</button>
 
 <audio id="startup">
     <source src="assets/startup.mp3" type="audio/mpeg">
