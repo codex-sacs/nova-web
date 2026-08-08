@@ -198,3 +198,26 @@ body{
     background:rgba(255,255,255,.15);
     margin:8px 0;
 }
+#enterBtn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.cf-turnstile{
+    margin:20px auto;
+}
+
+#ready-status{
+    color:#00ff88;
+    font-weight:bold;
+    margin:20px 0;
+    text-align:center;
+    animation:pulseReady 1.5s infinite;
+}
+
+@keyframes pulseReady{
+    50%{
+        opacity:.5;
+        text-shadow:0 0 20px #00ff88;
+    }
+}
