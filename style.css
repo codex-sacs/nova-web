@@ -399,3 +399,94 @@ body::after{
         font-size:2rem;
     }
 }
+/* =========================
+   SCROLLABLE NOVA UPGRADE
+========================= */
+
+body{
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    min-height:100vh;
+}
+
+.screen{
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:40px 20px;
+
+    z-index:5;
+}
+
+#about{
+    display:none;
+    overflow-y:auto;
+    padding-top:60px;
+    padding-bottom:60px;
+}
+
+.card{
+    width:min(950px,92%);
+    max-width:950px;
+
+    padding:40px;
+    margin:40px auto;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+/* Custom Scrollbar */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#050814;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#00e5ff;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#00ffff;
+}
+
+/* Extra Sections */
+
+.nova-section{
+    width:min(1100px,92%);
+    margin:60px auto;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.04);
+
+    backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.1);
+
+    text-align:center;
+}
+
+.nova-section h2{
+    color:#00e5ff;
+    margin-bottom:20px;
+}
+
+.nova-section p{
+    line-height:1.8;
+    color:#ddd;
+}
