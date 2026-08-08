@@ -140,3 +140,18 @@ setInterval(() => {
     .textContent = quotes[currentQuote];
 
 }, 5000);
+function speakWelcome() {
+
+    if (!("speechSynthesis" in window)) return;
+
+    const message = new SpeechSynthesisUtterance(
+        "Welcome to Nova A I. Systems online."
+    );
+
+    message.rate = 0.9;
+    message.pitch = 1;
+    message.volume = 1;
+
+    speechSynthesis.cancel();
+    speechSynthesis.speak(message);
+}
